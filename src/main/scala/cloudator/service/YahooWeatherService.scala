@@ -13,7 +13,7 @@ class YahooWeatherService(restTemplate: RestTemplate) extends WeatherService wit
 
   override def fetchLocationCond(req: WeatherRequest, ctx: RequestContext): Try[WeatherResult] = {
     import req.location._
-    val unitFilter: String = if (req.tempSymbol.equals(Celsius)) """u='c'""" else """u='f'"""
+    val unitFilter: String = if (req.temprUnit.equals(Celsius)) """u='c'""" else """u='f'"""
 
     val yqlRaw =
       s"""
@@ -26,8 +26,8 @@ class YahooWeatherService(restTemplate: RestTemplate) extends WeatherService wit
     //    val yql = basePath+ URLEncoder.encode(yqlRaw,"utf-8")
     val yql = basePath + yqlRaw
     val response = Try(restTemplate.getForObject(yql, classOf[String]))
-    logDebug(response.toString)
-    val res = response.flatMap(r => YWJsonParser.parse(ctx, req.tempSymbol, r))
+    logTrace(response.toString)
+    val res = response.flatMap(r => YWJsonParser.parse(ctx, req.temprUnit,req.location, r))
     res
 
   }

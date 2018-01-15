@@ -16,7 +16,7 @@ public class WeatherServiceUpdater {
 
 
     @Autowired
-    LocationCache task;
+    WeatherServiceExecutor task;
 
     @Autowired
     Environment env;

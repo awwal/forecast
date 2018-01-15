@@ -14,9 +14,9 @@ public class Application {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-        Location helsinki = new Location(60.1674, 24.9426);
-
-        context.getBean(LocationCache.class).getWeatherResult(new WeatherRequest(helsinki, Celsius$.MODULE$));
+//        Location helsinki = new Location(60.1674, 24.9426);
+//
+//        context.getBean(WeatherServiceExecutor.class).getWeatherResult(new WeatherRequest(helsinki, Celsius$.MODULE$));
     }
 
 }

@@ -10,27 +10,37 @@ import com.google.common.util.concurrent.{ListenableFuture, ListenableFutureTask
 import scala.collection.JavaConverters._
 import scala.util.{Failure, Success, Try}
 
-class LocationCache(weatherService: WeatherService, requestContext: RequestContext) extends  Runnable with Logging {
+class WeatherServiceExecutor(weatherService: WeatherService, requestContext: RequestContext) extends  Runnable with Logging {
 
 
 
- val loadingCache = CacheBuilder.newBuilder()
+ private val loadingCache = CacheBuilder.newBuilder()
     .maximumSize(1000)
     .build(new WeatherResultCacheLoader)
 
 
   override def run() = {
     val keys = loadingCache.asMap.keySet
-    logInfo("Refreshing cache. Size"+keys.size)
+    logInfo("Refreshing cache. Size "+keys.size)
     keys.asScala.foreach(key=>loadingCache.refresh(key))
 
     loadingCache.asMap().values().asScala.foreach(wr=>logInfo(wr.toString))
+  }
+
+  def getWeatherResults(requests:Seq[WeatherRequest]):Seq[WeatherResult] ={
+      requests.flatMap(req=>getWeatherResult(req))
   }
 
 
   def getWeatherResult(request:WeatherRequest):Option[WeatherResult] ={
     logDebug("Attempt to get result for location "+request.location)
     Try(loadingCache.get(request)).toOption
+  }
+
+  def fetchAllAvailableWeatherResult():Seq[WeatherResult] ={
+    val keys = loadingCache.asMap.keySet
+    logInfo("Fetching all "+keys.size()+" result available")
+    keys.asScala.flatMap(key=> getWeatherResult(key)).toSeq
   }
 
 
@@ -44,7 +54,6 @@ class LocationCache(weatherService: WeatherService, requestContext: RequestConte
 
       weatherService.fetchLocationCond(req, requestContext) match {
         case Success(wr) =>
-          logInfo(wr.toString)
           wr
         case Failure(e) =>
           logError("Updating weather info failed", e)

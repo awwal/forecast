@@ -1,4 +1,4 @@
-package cloudator.service
+package cloudator.util
 
 object StringOps {
   implicit class StringOperations(str: String) {

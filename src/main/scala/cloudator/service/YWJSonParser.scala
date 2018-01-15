@@ -2,7 +2,7 @@ package cloudator.service
 
 import java.util.Date
 
-import cloudator.model.{RequestContext, TemperatureUnit, WeatherCond, WeatherResult}
+import cloudator.model._
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonFormat.Shape._
 
@@ -28,22 +28,22 @@ case class Results(channel: Channel)
 
 case class Query(results: Results)
 
-case class QResult(@BeanProperty query: Query)
+case class QResult(query: Query)
 
 object YWJsonParser {
 
 
-  def parse(ctx:RequestContext, temperatureUnit: TemperatureUnit, json: String): Try[WeatherResult] = {
+  def parse(ctx:RequestContext, temprUnit: TemperatureUnit, location: Location,json: String): Try[WeatherResult] = {
     val qr = JsonUtil.fromJson[QResult](json)
     val item = qr.query.results.channel.item
 
 
     val cond = item.condition
     val forecast = item.forecast
-    val currCond = WeatherCond(cond.date, cond.temp, cond.text, false)
-    val forecastList = forecast.map(fc => WeatherCond(fc.date, fc.high, fc.text, false))
+    val currCond = WeatherCond(cond.date, cond.temp, cond.text)
+    val forecastList = forecast.map(fc => ForecastCond(fc.date, fc.low,fc.high, fc.text))
 
-    val wr = WeatherResult(currCond,forecastList,temperatureUnit)
+    val wr = WeatherResult(System.currentTimeMillis(),temprUnit,location, currCond,forecastList, alert = None)
     Success(wr)
   }
 
