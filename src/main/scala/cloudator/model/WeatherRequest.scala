@@ -8,7 +8,7 @@ case class WeatherRequest(location: String, temprUnit: TemperatureUnit = Celsius
 
 case class RequestContext(minTemp: Int, maxTemp: Int)
 
-case class Alert(description: String) extends AnyVal
+case class Alert(description: String)
 
 case class WeatherResult(updateTime: Long, tempSymbol: TemperatureUnit, location: String,
                          currCond: WeatherCond, futureCond: List[ForecastCond], alert: Option[Alert]) {
