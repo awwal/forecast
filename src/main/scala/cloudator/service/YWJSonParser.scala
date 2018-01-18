@@ -6,7 +6,6 @@ import cloudator.model._
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonFormat.Shape._
 
-import scala.beans.BeanProperty
 import scala.util.{Success, Try}
 
 //Sat, 13 Jan 2018 12:00 PM AKST
@@ -33,7 +32,8 @@ case class QResult(query: Query)
 object YWJsonParser {
 
 
-  def parse(ctx:RequestContext, temprUnit: TemperatureUnit, location: Location,json: String): Try[WeatherResult] = {
+  def parse(alertFunc: Seq[ForecastCond] => Option[Alert],ctx: RequestContext,
+            temprUnit: TemperatureUnit, location: String, json: String): Try[WeatherResult] = {
     val qr = JsonUtil.fromJson[QResult](json)
     val item = qr.query.results.channel.item
 
@@ -41,9 +41,11 @@ object YWJsonParser {
     val cond = item.condition
     val forecast = item.forecast
     val currCond = WeatherCond(cond.date, cond.temp, cond.text)
-    val forecastList = forecast.map(fc => ForecastCond(fc.date, fc.low,fc.high, fc.text))
+    val forecastList = forecast.map(fc => ForecastCond(fc.date, fc.low, fc.high, fc.text))
 
-    val wr = WeatherResult(System.currentTimeMillis(),temprUnit,location, currCond,forecastList, alert = None)
+    val alert = alertFunc(forecastList)
+
+    val wr = WeatherResult(System.currentTimeMillis(), temprUnit, location, currCond, forecastList, alert)
     Success(wr)
   }
 

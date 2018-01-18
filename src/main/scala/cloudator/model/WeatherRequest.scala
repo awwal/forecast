@@ -3,44 +3,14 @@ package cloudator.model
 import java.text.SimpleDateFormat
 import java.util.Date
 
-import scala.annotation.tailrec
-import scala.util.Try
 
-
-case class Location(lat: Double, lon: Double){
-  override def toString: String = s"[$lat,$lon]"
-}
-
-object Location{
-
-  @tailrec
-  def getLocation(seq:List[Double],locs:List[Location]): Seq[Location] ={
-    seq match {
-      case lat :: lon :: tail =>
-         val loc = Location(lat,lon)
-         getLocation(tail, loc :: locs)
-      case _ => locs
-    }
-  }
-
-  def fromString(locationStr:String):Seq[Location]={
-    val latlons = locationStr.split(",")
-    val asDoubles = latlons.map(l=> Try(l.toDouble ) )
-    if(asDoubles.exists(_.isFailure)){
-      throw new RuntimeException(s"Illegal location $locationStr provided")
-    }
-    getLocation(asDoubles.map(t=>t.get).toList,List())
-
-  }
-}
-
-case class WeatherRequest(location: Location, temprUnit: TemperatureUnit = Celsius)
+case class WeatherRequest(location: String, temprUnit: TemperatureUnit = Celsius)
 
 case class RequestContext(minTemp: Int, maxTemp: Int)
 
 case class Alert(description: String) extends AnyVal
 
-case class WeatherResult(updateTime: Long, tempSymbol: TemperatureUnit, location: Location,
+case class WeatherResult(updateTime: Long, tempSymbol: TemperatureUnit, location: String,
                          currCond: WeatherCond, futureCond: List[ForecastCond], alert: Option[Alert]) {
 
   override def toString: String = WeatherResult.format(this)
