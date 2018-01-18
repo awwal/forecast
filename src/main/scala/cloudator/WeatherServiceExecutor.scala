@@ -3,7 +3,8 @@ package cloudator
 import java.util.concurrent.{Callable, ExecutorService, Executors}
 
 import cloudator.model.{RequestContext, WeatherRequest, WeatherResult}
-import cloudator.service.WeatherService
+import cloudator.service.{OutputLog, WeatherService}
+import cloudator.util.Logging
 import com.google.common.cache.{CacheBuilder, CacheLoader}
 import com.google.common.util.concurrent.{ListenableFuture, ListenableFutureTask}
 
@@ -24,7 +25,7 @@ class WeatherServiceExecutor(weatherService: WeatherService, requestContext: Req
     logInfo("Refreshing cache. Size "+keys.size)
     keys.asScala.foreach(key=>loadingCache.refresh(key))
 
-    loadingCache.asMap().values().asScala.foreach(wr=>logInfo(wr.toString))
+    loadingCache.asMap().values().asScala.foreach(wr=>OutputLog.log(wr.toString))
   }
 
   def getWeatherResults(requests:Seq[WeatherRequest]):Seq[WeatherResult] ={
@@ -39,7 +40,7 @@ class WeatherServiceExecutor(weatherService: WeatherService, requestContext: Req
 
   def fetchAllAvailableWeatherResult():Seq[WeatherResult] ={
     val keys = loadingCache.asMap.keySet
-    logInfo("Fetching all "+keys.size()+" result available")
+    logDebug("Fetching all "+keys.size()+" result available")
     keys.asScala.flatMap(key=> getWeatherResult(key)).toSeq
   }
 
@@ -56,7 +57,7 @@ class WeatherServiceExecutor(weatherService: WeatherService, requestContext: Req
         case Success(wr) =>
           wr
         case Failure(e) =>
-          logError("Updating weather info failed", e)
+          OutputLog.logError(req,e)
           throw e
       }
     }

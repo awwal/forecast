@@ -20,15 +20,15 @@ class WeatherController {
 
   @GetMapping(value = Array("/api/forecasts"), produces = Array(APPLICATION_JSON_UTF8_VALUE))
   @ResponseBody
-  def getAll(@RequestParam(name = "location", required = false) location: String,
+  def getAll(@RequestParam(name = "locations", required = false) locations: String,
              @RequestParam(name = "unit", required = false) tempUnit: String): JCol[WeatherResult] = {
 
-    if (location == null)
+    if (locations == null)
       weatherServiceExecutor.fetchAllAvailableWeatherResult().asJavaCollection
     else {
 
       val tempSymbol = if ("f".equalsIgnoreCase(tempUnit)) Fahrenheit else Celsius
-      val requests =location.split(",").map(loc => WeatherRequest(loc.trim, tempSymbol))
+      val requests =locations.split(",").map(loc => WeatherRequest(loc.trim, tempSymbol))
 
       weatherServiceExecutor.getWeatherResults(requests).asJava
     }

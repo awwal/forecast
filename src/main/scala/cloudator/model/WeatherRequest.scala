@@ -41,6 +41,7 @@ object WeatherResult {
     }
 
     val predictTemp = predictions.map(cond => tempRange(cond.min + "", cond.max + ""))
+    val alertDescription = wr.alert.map(_.description).getOrElse("None")
     val body = (s"${currCond.temp}$symbol".fitToLen(columnLen) :: predictTemp).mkString(" | ")
 
     val timeUpdated = timeFormat.format(new Date(updateTime))
@@ -53,6 +54,8 @@ object WeatherResult {
     sb.append("-" * columnLen * 7).append(NEWLINE)
     sb.append(headers).append(NEWLINE)
     sb.append(body).append(NEWLINE)
+    sb.append("-" * columnLen * 7).append(NEWLINE)
+    sb.append("ALERT: "+alertDescription).append(NEWLINE)
     sb.append("-" * columnLen * 7).append(NEWLINE)
     sb.toString
   }

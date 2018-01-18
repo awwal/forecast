@@ -1,5 +1,7 @@
 package cloudator.service
 
+import java.text.SimpleDateFormat
+
 import cloudator.model._
 
 import scala.util.Try
@@ -10,14 +12,16 @@ trait WeatherService {
   def fetchLocationCond(req: WeatherRequest, ctx: RequestContext): Try[WeatherResult]
 
   def checkForTemperatureAlert(ctx: RequestContext)(cond: Seq[ForecastCond]): Option[Alert] = {
+    val dateFormat = new SimpleDateFormat("EEE,dd MMM")
+
     val safeRange = Range.inclusive(ctx.minTemp, ctx.maxTemp)
 
-    def tempRange(forecastCond: ForecastCond) = Range.inclusive(forecastCond.min, forecastCond.max)
+    def withinRange(fc: ForecastCond) = safeRange.contains(fc.min) && safeRange.contains(fc.max)
 
-    cond.sortBy(_.date).find(fc => safeRange.intersect(tempRange(fc)).isEmpty) match {
+    cond.sortBy(_.date).find(fc => !withinRange(fc)) match {
       case Some(fc) =>
-        Some(Alert(s"Forecast Temperature [${fc.min} ${fc.max}] on ${fc.date} " +
-              s"overshoots tolerable range [${ctx.minTemp} ${ctx.maxTemp}]"))
+        Some(Alert(s"Forecast Temperature [${fc.min} ${fc.max}] on ${dateFormat.format(fc.date)} " +
+          s"overshoots tolerable range [${ctx.minTemp} ${ctx.maxTemp}]"))
       case _ => None
     }
 

@@ -1,4 +1,4 @@
-package cloudator
+package cloudator.util
 
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -10,7 +10,6 @@ trait Logging {
     this.getClass.getName.stripSuffix("$")
   }
 
-  // Method to get or create the logger for this object
   protected def log: Logger = {
     if (log_ == null) {
       log_ = LoggerFactory.getLogger(logName)

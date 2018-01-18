@@ -1,7 +1,8 @@
 package cloudator.service
 
-import cloudator.Logging
 import cloudator.model._
+import cloudator.util.Logging
+import org.apache.commons.lang.StringEscapeUtils
 import org.springframework.web.client.RestTemplate
 
 import scala.util.Try
@@ -12,7 +13,8 @@ class YahooWeatherService(restTemplate: RestTemplate) extends WeatherService wit
   val basePath = "http://query.yahooapis.com/v1/public/yql?format=json&q="
 
   override def fetchLocationCond(req: WeatherRequest, ctx: RequestContext): Try[WeatherResult] = {
-    import req._
+
+    val location = StringEscapeUtils.escapeSql(req.location)
     val unitFilter: String = if (req.temprUnit.equals(Celsius)) """u='c'""" else """u='f'"""
 
     val yqlRaw =

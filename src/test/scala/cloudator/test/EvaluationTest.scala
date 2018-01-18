@@ -42,6 +42,8 @@ class EvaluationTest extends FlatSpec {
     assert(p.get.alert.nonEmpty)
     println(p.get.alert.get)
 
+    println(Range.inclusive(0,30).intersect(Range(-7,0)))
+
 
   }
 }
