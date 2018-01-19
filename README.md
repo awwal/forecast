@@ -11,3 +11,6 @@ java -jar target/forecast-0.1-SNAPSHOT.jar  --mintemp=0 --maxtemp=30 --locations
 #View log
 tail -f applogs/forecast.log
 
+#Ui 
+The ui can be access http://localhost:8080/ui
+

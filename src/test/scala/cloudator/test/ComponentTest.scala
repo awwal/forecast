@@ -8,7 +8,7 @@ import scala.io.Source
 import scala.util.{Failure, Try}
 
 
-class EvaluationTest extends FlatSpec {
+class ComponentTest extends FlatSpec {
 
 
   it should "Parse yahoo weather json correctly " in {
@@ -18,7 +18,7 @@ class EvaluationTest extends FlatSpec {
 
 
     val alertFunc: Seq[ForecastCond] => Option[Alert] = (_)=>None
-    val p: Try[WeatherResult] = YWJsonParser.parse(alertFunc,context, Celsius,"helsinki", testjson)
+    val p: Try[WeatherResult] = YWJsonParser.parse(alertFunc,context, TemperatureUnit.Celsius,"helsinki", testjson)
     assert(p.isSuccess)
     assert(p.get.alert.isEmpty)
 
@@ -36,7 +36,7 @@ class EvaluationTest extends FlatSpec {
 
 
     val alertFunc: Seq[ForecastCond] => Option[Alert] = (fs)=> StubService.checkForTemperatureAlert(context)(fs)
-    val p: Try[WeatherResult] = YWJsonParser.parse(alertFunc,context, Celsius,"helsinki", testjson)
+    val p: Try[WeatherResult] = YWJsonParser.parse(alertFunc,context, TemperatureUnit.Celsius,"helsinki", testjson)
     assert(p.isSuccess)
     println(p.get)
     assert(p.get.alert.nonEmpty)

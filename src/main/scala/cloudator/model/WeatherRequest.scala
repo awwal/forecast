@@ -3,8 +3,10 @@ package cloudator.model
 import java.text.SimpleDateFormat
 import java.util.Date
 
+import cloudator.model.TemperatureUnit.TemperatureUnit
 
-case class WeatherRequest(location: String, temprUnit: TemperatureUnit = Celsius)
+
+case class WeatherRequest(location: String, temprUnit: TemperatureUnit = TemperatureUnit.Celsius)
 
 case class RequestContext(minTemp: Int, maxTemp: Int)
 
@@ -45,7 +47,7 @@ object WeatherResult {
     val body = (s"${currCond.temp}$symbol".fitToLen(columnLen) :: predictTemp).mkString(" | ")
 
     val timeUpdated = timeFormat.format(new Date(updateTime))
-    val unitUsed = if (tempSymbol == Celsius) "Celsius" else "Fahrenheit"
+    val unitUsed = if (tempSymbol == TemperatureUnit.Celsius) "Celsius" else "Fahrenheit"
 
     val sb = new StringBuffer()
     sb.append(NEWLINE)

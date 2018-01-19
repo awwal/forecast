@@ -9,6 +9,7 @@ import com.google.common.cache.{CacheBuilder, CacheLoader}
 import com.google.common.util.concurrent.{ListenableFuture, ListenableFutureTask}
 
 import scala.collection.JavaConverters._
+import scala.collection.immutable.Iterable
 import scala.util.{Failure, Success, Try}
 
 class WeatherServiceExecutor(weatherService: WeatherService, requestContext: RequestContext) extends  Runnable with Logging {

@@ -27,8 +27,9 @@ class WeatherController {
       weatherServiceExecutor.fetchAllAvailableWeatherResult().asJavaCollection
     else {
 
-      val tempSymbol = if ("f".equalsIgnoreCase(tempUnit)) Fahrenheit else Celsius
-      val requests =locations.split(",").map(loc => WeatherRequest(loc.trim, tempSymbol))
+      val tempSymbol = if ("f".equalsIgnoreCase(tempUnit)) TemperatureUnit.Fahrenheit else TemperatureUnit.Celsius
+      val requests = locations.split(",").filter(_.nonEmpty)
+        .map(loc => WeatherRequest(loc.trim, tempSymbol)).toSeq
 
       weatherServiceExecutor.getWeatherResults(requests).asJava
     }

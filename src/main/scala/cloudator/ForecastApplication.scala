@@ -1,6 +1,6 @@
 package cloudator
 
-import cloudator.model.{Celsius, WeatherRequest}
+import cloudator.model.{TemperatureUnit, WeatherRequest}
 import cloudator.util.Logging
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -17,9 +17,9 @@ object ForecastApplication extends  Logging{
 
     Option(context.getEnvironment.getProperty("locations")) match {
       case  Some(locations) =>
-        locations.split(",").map(_.trim).foreach(loc=>{
+        locations.split(",").toSet.filter(_.nonEmpty).map(_.trim).toSeq.foreach(loc=>{
           logInfo(s"Starting and checking $loc")
-          context.getBean(classOf[WeatherServiceExecutor]).getWeatherResult( WeatherRequest(loc, Celsius))
+          context.getBean(classOf[WeatherServiceExecutor]).getWeatherResult( WeatherRequest(loc, TemperatureUnit.Celsius))
         })
       case None => ()
 

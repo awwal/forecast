@@ -15,7 +15,7 @@ class YahooWeatherService(restTemplate: RestTemplate) extends WeatherService wit
   override def fetchLocationCond(req: WeatherRequest, ctx: RequestContext): Try[WeatherResult] = {
 
     val location = StringEscapeUtils.escapeSql(req.location)
-    val unitFilter: String = if (req.temprUnit.equals(Celsius)) """u='c'""" else """u='f'"""
+    val unitFilter: String = if (req.temprUnit.equals(TemperatureUnit.Celsius)) """u='c'""" else """u='f'"""
 
     val yqlRaw =
       s"""

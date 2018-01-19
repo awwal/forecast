@@ -1,14 +1,10 @@
 package cloudator.model
 
-sealed trait TemperatureUnit {
-  override def toString: String = TemperatureUnit.toSymbol(this)
-}
 
-case object Fahrenheit extends TemperatureUnit
+object TemperatureUnit extends Enumeration {
+  type TemperatureUnit = Value
+  val Fahrenheit, Celsius = Value
 
-case object Celsius extends TemperatureUnit
-
-object TemperatureUnit {
   def fromString(sym: String): Option[TemperatureUnit] = sym match {
 
     case "c" | "C" => Some(Celsius)
@@ -19,7 +15,8 @@ object TemperatureUnit {
 
   val DEGREE = "\u00b0"
 
-  def toSymbol(tempSymbol: TemperatureUnit): String = tempSymbol match {
+  //  @JsonValue
+  def getSymbol(tempSymbol: TemperatureUnit): String = tempSymbol match {
     case Fahrenheit => DEGREE + "F"
     case Celsius => DEGREE + "C"
   }

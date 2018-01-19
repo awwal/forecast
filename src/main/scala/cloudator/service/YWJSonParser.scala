@@ -2,6 +2,7 @@ package cloudator.service
 
 import java.util.Date
 
+import cloudator.model.TemperatureUnit.TemperatureUnit
 import cloudator.model._
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonFormat.Shape._
@@ -33,7 +34,7 @@ object YWJsonParser {
 
 
   def parse(alertFunc: Seq[ForecastCond] => Option[Alert],ctx: RequestContext,
-            temprUnit: TemperatureUnit, location: String, json: String): Try[WeatherResult] = {
+            temprUnit:TemperatureUnit, location: String, json: String): Try[WeatherResult] = {
     val qr = JsonUtil.fromJson[QResult](json)
     val item = qr.query.results.channel.item
 
