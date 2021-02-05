@@ -1,4 +1,4 @@
-package cloudator.model
+package forecast.model
 
 import java.util.Date
 

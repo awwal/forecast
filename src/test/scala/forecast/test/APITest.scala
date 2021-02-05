@@ -1,7 +1,7 @@
-package cloudator.test
+package forecast.test
 
-import cloudator.model.{TemperatureUnit, WeatherResult}
-import cloudator.service.JsonUtil
+import forecast.model.{TemperatureUnit, WeatherResult}
+import forecast.service.JsonUtil
 import org.junit.Assert._
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,12 +1,11 @@
-package cloudator
+package forecast
 
-import java.util.{Collection => JCol}
-
-import cloudator.model._
+import forecast.model._
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 import org.springframework.web.bind.annotation._
 
+import java.util.{Collection => JCol}
 import scala.collection.JavaConverters._
 
 

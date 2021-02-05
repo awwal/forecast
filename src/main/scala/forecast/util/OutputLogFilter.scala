@@ -1,9 +1,9 @@
-package cloudator.util
+package forecast.util
 
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.filter.Filter
 import ch.qos.logback.core.spi.FilterReply
-import cloudator.service.OutputLog
+import forecast.service.OutputLog
 
 class OutputLogFilter extends Filter[ILoggingEvent] {
   override def decide(event: ILoggingEvent): FilterReply = {

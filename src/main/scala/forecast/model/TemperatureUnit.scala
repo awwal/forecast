@@ -1,4 +1,4 @@
-package cloudator.model
+package forecast.model
 
 
 object TemperatureUnit extends Enumeration {

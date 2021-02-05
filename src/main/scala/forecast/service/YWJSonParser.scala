@@ -1,12 +1,11 @@
-package cloudator.service
+package forecast.service
 
-import java.util.Date
-
-import cloudator.model.TemperatureUnit.TemperatureUnit
-import cloudator.model._
+import forecast.model.TemperatureUnit.TemperatureUnit
+import forecast.model._
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonFormat.Shape._
 
+import java.util.Date
 import scala.util.{Success, Try}
 
 //Sat, 13 Jan 2018 12:00 PM AKST

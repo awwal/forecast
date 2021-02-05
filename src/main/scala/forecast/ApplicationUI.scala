@@ -1,22 +1,20 @@
-package cloudator
+package forecast
 
-import java.text.SimpleDateFormat
-import java.util.Locale
-
-import cloudator.model.WeatherResult
-import cloudator.service.JsonUtil
+import forecast.model.WeatherResult
+import forecast.service.JsonUtil
 import com.vaadin.annotations.Theme
 import com.vaadin.data.Property
 import com.vaadin.server._
 import com.vaadin.spring.annotation.SpringUI
-import com.vaadin.ui._
+import com.vaadin.ui.{VerticalLayout, _}
 import com.vaadin.ui.themes.ValoTheme
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
 import org.springframework.web.client.RestTemplate
 
+import java.text.SimpleDateFormat
+import java.util.Locale
 import scala.util.{Success, Try}
-import com.vaadin.ui.VerticalLayout
 
 @Theme("valo")
 @SpringUI

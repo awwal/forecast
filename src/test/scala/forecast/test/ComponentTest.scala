@@ -1,7 +1,7 @@
-package cloudator.test
+package forecast.test
 
-import cloudator.model._
-import cloudator.service.{WeatherService, YWJsonParser}
+import forecast.model._
+import forecast.service.{WeatherService, YWJsonParser}
 import org.scalatest._
 
 import scala.io.Source
@@ -27,7 +27,7 @@ class ComponentTest extends FlatSpec {
   it should "Have alert created" in {
 
     case object StubService extends WeatherService {
-      override def fetchLocationCond(req: WeatherRequest, ctx: RequestContext) = Failure(new NotImplementedError(""))
+      override def fetchLocationCond(req: WeatherRequest, ctx: RequestContext):Try[WeatherResult] = Failure(new NotImplementedError(""))
 
     }
 

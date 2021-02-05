@@ -1,4 +1,4 @@
-package cloudator.util
+package forecast.util
 
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -59,7 +59,7 @@ trait Logging {
     if (log.isErrorEnabled) log.error(msg, throwable)
   }
 
-  protected def isTraceEnabled(): Boolean = {
+  protected def isTraceEnabled: Boolean = {
     log.isTraceEnabled
   }
 

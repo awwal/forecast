@@ -1,10 +1,10 @@
-package cloudator
+package forecast
 
 import java.util.concurrent.{Callable, ExecutorService, Executors}
 
-import cloudator.model.{RequestContext, WeatherRequest, WeatherResult}
-import cloudator.service.{OutputLog, WeatherService}
-import cloudator.util.Logging
+import forecast.model.{RequestContext, WeatherRequest, WeatherResult}
+import forecast.service.{OutputLog, WeatherService}
+import forecast.util.Logging
 import com.google.common.cache.{CacheBuilder, CacheLoader}
 import com.google.common.util.concurrent.{ListenableFuture, ListenableFutureTask}
 

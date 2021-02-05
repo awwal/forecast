@@ -1,9 +1,8 @@
-package cloudator.service
+package forecast.service
+
+import forecast.model._
 
 import java.text.SimpleDateFormat
-
-import cloudator.model._
-
 import scala.util.Try
 
 

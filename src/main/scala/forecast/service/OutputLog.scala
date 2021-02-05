@@ -1,6 +1,6 @@
-package cloudator.service
+package forecast.service
 
-import cloudator.model.WeatherRequest
+import forecast.model.WeatherRequest
 import org.slf4j.LoggerFactory
 
 object OutputLog {

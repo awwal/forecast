@@ -1,7 +1,7 @@
-package cloudator
+package forecast
 
-import cloudator.model.{TemperatureUnit, WeatherRequest}
-import cloudator.util.Logging
+import forecast.model.{TemperatureUnit, WeatherRequest}
+import forecast.util.Logging
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 

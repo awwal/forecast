@@ -1,7 +1,7 @@
-package cloudator.service
+package forecast.service
 
-import cloudator.model._
-import cloudator.util.Logging
+import forecast.model._
+import forecast.util.Logging
 import org.apache.commons.lang.StringEscapeUtils
 import org.springframework.web.client.RestTemplate
 

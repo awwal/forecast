@@ -1,4 +1,4 @@
-package cloudator.service
+package forecast.service
 
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule

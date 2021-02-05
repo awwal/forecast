@@ -1,6 +1,7 @@
-package cloudator.util
+package forecast.util
 
 object StringOps {
+
   implicit class StringOperations(str: String) {
 
     def fitToLen(len: Int, char: Char = ' '): String = {
@@ -11,8 +12,6 @@ object StringOps {
         str.concat(pads)
       }
     }
-
-
   }
 
 }

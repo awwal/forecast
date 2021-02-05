@@ -1,8 +1,8 @@
-package cloudator
+package forecast
 
-import cloudator.model.RequestContext
-import cloudator.service.YahooWeatherService
-import cloudator.util.Logging
+import forecast.model.RequestContext
+import forecast.service.YahooWeatherService
+import forecast.util.Logging
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,7 +17,7 @@ import scala.util.Try
 @Configuration
 class BeanConfiguration extends  Logging {
 
-  @Autowired private[cloudator] val env :Environment= null
+  @Autowired private[forecast] val env :Environment= null
 
   @Bean
   def threadPoolTaskScheduler: ThreadPoolTaskScheduler = {
@@ -39,7 +39,7 @@ class BeanConfiguration extends  Logging {
   }
 
   @Bean
-  private[cloudator] def restTemplate = {
+  private[forecast] def restTemplate = {
     val restTemplateBuilder = new RestTemplateBuilder
     restTemplateBuilder.setConnectTimeout(500).setReadTimeout(500).build
   }

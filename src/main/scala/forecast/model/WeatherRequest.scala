@@ -1,9 +1,9 @@
-package cloudator.model
+package forecast.model
+
+import forecast.model.TemperatureUnit.TemperatureUnit
 
 import java.text.SimpleDateFormat
 import java.util.Date
-
-import cloudator.model.TemperatureUnit.TemperatureUnit
 
 
 case class WeatherRequest(location: String, temprUnit: TemperatureUnit = TemperatureUnit.Celsius)
@@ -28,7 +28,7 @@ object WeatherResult {
 
 
   def format(wr: WeatherResult): String = {
-    import cloudator.util.StringOps._
+    import forecast.util.StringOps._
     import wr._
     val symbol = tempSymbol.toString
     val predictions = futureCond.sortBy(_.date).take(5)
